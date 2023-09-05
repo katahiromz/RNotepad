@@ -1,10 +1,16 @@
 # ![](img/notepad-32x32.png) Independent ReactOS Notepad
 
-This is `"Independent ReactOS Notepad"` from ReactOS.
+This is `"Independent ReactOS Notepad"` from [ReactOS](https://reactos.org/).
 
 ![(The screenshot)](img/screenshot.gif)
 
 It's a free and open source software for Windows XP and later.
+
+<p align=center>
+  <a href="https://reactos.org/">
+    <img alt="ReactOS" src="https://reactos.org/wiki/images/0/02/ReactOS_logo.png">
+  </a>
+</p>
 
 <p align=center>
   <a href="https://reactos.org/donate/">
