@@ -31,6 +31,17 @@
 - Copyright Mário Kačmár /Mario Kacmar/ aka Kario (kario@szm.sk)
 - and more!
 
+## How to build?
+
+Please use ReactOS Build Environment (RosBE).
+
+```bash
+cd RNotepad
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .
+ninja
+strip notepad.exe
+```
+
 ## License
 
 - LGPL 2.1 and later

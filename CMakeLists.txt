@@ -78,7 +78,7 @@ target_compile_definitions(notepad PRIVATE
     LANGUAGE_ZH_HK
     LANGUAGE_ZH_TW)
 
-target_include_directories(notepad PRIVATE . reactos/ ../reactos/output-MinGW-i386/sdk/include/reactos)
+target_include_directories(notepad PRIVATE ./ reactos/)
 target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 shell32 msvcrt kernel32)
 if (MSVC)
     target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
