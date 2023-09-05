@@ -36,6 +36,7 @@
 Please use ReactOS Build Environment (RosBE).
 
 ```bash
+git clone https://github.com/katahiromz/RNotepad
 cd RNotepad
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .
 ninja
