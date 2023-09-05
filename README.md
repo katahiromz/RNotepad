@@ -10,7 +10,7 @@
 - Copyright 2019-2023 Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>
 - and more!
 
-# Translators
+## Translators
 
 - Copyright 2011 Petru Dimitriu <petrimetri@gmail.com>
 - Copyright 2011-2019 Ștefan Fulea <stefan.fulea@mail.com>
