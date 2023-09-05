@@ -30,3 +30,7 @@
 - Copyright Joann Mõndresku (joannmondresku at gmail dot com)
 - Copyright Mário Kačmár /Mario Kacmar/ aka Kario (kario@szm.sk)
 - and more!
+
+## License
+
+- LGPL 2.1 and later
