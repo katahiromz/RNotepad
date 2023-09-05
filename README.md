@@ -1,5 +1,9 @@
 # RNotepad --- Independent ReactOS Notepad
 
+This is "Independent ReactOS Notepad" from ReactOS.
+
+![(The screenshot)](img/screenshot.gif)
+
 ## Main code contributors
 
 - Copyright ReactOS Development Team
