@@ -13,7 +13,6 @@ WinMain(HINSTANCE   hInstance,
         LPSTR       lpCmdLine,
         INT         nCmdShow)
 {
-    INT ret;
     WCHAR szCmdLine[1024];
     MultiByteToWideChar(CP_ACP, 0, lpCmdLine, -1, szCmdLine, _countof(szCmdLine));
     szCmdLine[_countof(szCmdLine) - 1] = UNICODE_NULL;

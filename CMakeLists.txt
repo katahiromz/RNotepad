@@ -33,8 +33,8 @@ add_executable(notepad WIN32
     settings.c
     text.c
     rsrc.rc
-    mingw/wWinMain.c
-    mingw/_CrtSetDbgFlag.c)
+    compat/wWinMain.c
+    compat/_CrtSetDbgFlag.c)
 
 target_compile_definitions(notepad PRIVATE
     UNICODE _UNICODE _CRT_SECURE_NO_WARNINGS
