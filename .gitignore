@@ -35,3 +35,4 @@ a.*
 .ninja*
 lib*.a
 *.dll
+*.db
