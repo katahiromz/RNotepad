@@ -1,0 +1,85 @@
+# RNotepad --- Independent ReactOS Notepad
+
+# CMake minimum version
+cmake_minimum_required(VERSION 3.0)
+
+# project name and languages
+project(RNotepad C RC)
+
+if (DBG)
+    add_definitions(-D_DEBUG=1)
+endif()
+
+if (MSVC)
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)")
+        add_definitions(-D_X86_)
+    elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "(amd64)|(AMD64)")
+        add_definitions(-D_AMD64_)
+    else()
+        message(FATAL_ERROR "Unsupportet platform")
+    endif()
+endif()
+
+if (MSVC)
+    set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /MANIFEST:NO")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /MANIFEST:NO")
+endif()
+
+add_executable(notepad WIN32
+    dialog.c
+    main.c
+    printing.c
+    settings.c
+    text.c
+    rsrc.rc
+    mingw/wWinMain.c
+    mingw/_CrtSetDbgFlag.c)
+
+target_compile_definitions(notepad PRIVATE
+    UNICODE _UNICODE _CRT_SECURE_NO_WARNINGS
+    LANGUAGE_BG_BG
+    LANGUAGE_CS_CZ
+    LANGUAGE_DA_DK
+    LANGUAGE_DE_DE
+    LANGUAGE_EL_GR
+    LANGUAGE_EN_US
+    LANGUAGE_ES_ES
+    LANGUAGE_ET_EE
+    LANGUAGE_EU_ES
+    LANGUAGE_FI_FI
+    LANGUAGE_FR_FR
+    LANGUAGE_HE_IL
+    LANGUAGE_HI_IN
+    LANGUAGE_HR_HR
+    LANGUAGE_HU_HU
+    LANGUAGE_HY_AM
+    LANGUAGE_ID_ID
+    LANGUAGE_IT_IT
+    LANGUAGE_JA_JP
+    LANGUAGE_LT_LT
+    LANGUAGE_MS_MY
+    LANGUAGE_NB_NO
+    LANGUAGE_NL_NL
+    LANGUAGE_PL_PL
+    LANGUAGE_PT_BR
+    LANGUAGE_PT_PT
+    LANGUAGE_RO_RO
+    LANGUAGE_RU_RU
+    LANGUAGE_SK_SK
+    LANGUAGE_SL_SI
+    LANGUAGE_SQ_AL
+    LANGUAGE_SV_SE
+    LANGUAGE_TH_TH
+    LANGUAGE_TR_TR
+    LANGUAGE_UK_UA
+    LANGUAGE_UZ_UZ
+    LANGUAGE_ZH_CN
+    LANGUAGE_ZH_HK
+    LANGUAGE_ZH_TW)
+
+target_include_directories(notepad PRIVATE . reactos/ ../reactos/output-MinGW-i386/sdk/include/reactos)
+target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 shell32 msvcrt kernel32)
+if (MSVC)
+    target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
+endif()
