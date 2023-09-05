@@ -164,7 +164,7 @@ int DIALOG_StringMsgBox(HWND hParent, int formatId, LPCTSTR szString, DWORD dwFl
 
     /* Load and format szMessage */
     LoadString(Globals.hInstance, formatId, szResource, _countof(szResource));
-    _sntprintf(szMessage, _countof(szMessage), szResource, szString);
+    StringCchPrintf(szMessage, _countof(szMessage), szResource, szString);
 
     /* Load szCaption */
     if ((dwFlags & MB_ICONMASK) == MB_ICONEXCLAMATION)
