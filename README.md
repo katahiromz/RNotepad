@@ -4,7 +4,7 @@ This is `"Independent ReactOS Notepad"` from ReactOS.
 
 ![(The screenshot)](img/screenshot.gif)
 
-It's a freeware and open source software.
+It's a freeware and open source software for Windows XP and later.
 
 ## Main code contributors
 
