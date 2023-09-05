@@ -1,7 +1,7 @@
 # RNotepad --- Independent ReactOS Notepad
 
 # CMake minimum version
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 # project name and languages
 project(RNotepad C RC)
@@ -33,7 +33,7 @@ add_executable(notepad WIN32
     settings.c
     text.c
     rsrc.rc
-    compat/wWinMain.c
+    compat/WinMain.c
     compat/_CrtSetDbgFlag.c)
 
 target_compile_definitions(notepad PRIVATE
