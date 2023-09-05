@@ -1,4 +1,4 @@
-# RNotepad ― Independent ReactOS Notepad
+# ![](img/notepad-32x32.png) RNotepad ― Independent ReactOS Notepad
 
 This is `"Independent ReactOS Notepad"` from ReactOS.
 
