@@ -83,11 +83,11 @@ target_compile_definitions(notepad PRIVATE
 
 target_include_directories(notepad PRIVATE ./ reactos/)
 target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 shell32 msvcrt kernel32)
-if (MSVC)
-    target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
-endif()
 
 if (MSVC)
+    # Use wWinMain
+    target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
+
     # No default manifest
     target_link_options(notepad PRIVATE /MANIFEST:NO)
 endif()
