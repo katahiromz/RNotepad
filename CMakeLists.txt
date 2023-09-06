@@ -6,25 +6,35 @@ cmake_minimum_required(VERSION 3.5)
 # project name and languages
 project(RNotepad C RC)
 
+##############################################################################
+# Debugging
+
 if (DBG)
     add_definitions(-D_DEBUG=1)
 endif()
 
+##############################################################################
+# Architecture
+
 if (MSVC)
-    if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)")
-        add_definitions(-D_X86_)
-    elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "(amd64)|(AMD64)")
-        add_definitions(-D_AMD64_)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        add_definitions(-D_AMD64_ -D_M_AMD64)
     else()
-        message(FATAL_ERROR "Unsupportet platform")
+        add_definitions(-D_X86_ -D_M_IX86)
     endif()
 endif()
+
+##############################################################################
+# No default manifest
 
 if (MSVC)
     set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /MANIFEST:NO")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /MANIFEST:NO")
 endif()
+
+##############################################################################
+# notepad.exe
 
 add_executable(notepad WIN32
     dialog.c
@@ -85,3 +95,5 @@ target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 sh
 if (MSVC)
     target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
 endif()
+
+##############################################################################
