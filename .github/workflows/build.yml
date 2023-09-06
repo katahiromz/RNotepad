@@ -13,17 +13,9 @@ jobs:
     steps:
     - name: Install ninja
       run: choco install -y ninja
-    - name: Activate VS cmd (x86)
-      if: ${{ matrix.arch == 'i386' }}
+    - name: Activate VS cmd
       uses: ilammy/msvc-dev-cmd@v1
       with:
-        arch: amd64_x86
-        toolset: ${{matrix.toolset}}
-    - name: Activate VS cmd (amd64)
-      if: ${{ matrix.arch == 'amd64' }}
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: amd64
         toolset: ${{matrix.toolset}}
     - name: Source checkout
       uses: actions/checkout@v3
