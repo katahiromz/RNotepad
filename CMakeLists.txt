@@ -25,15 +25,6 @@ if (MSVC)
 endif()
 
 ##############################################################################
-# No default manifest
-
-if (MSVC)
-    set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /MANIFEST:NO")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} /MANIFEST:NO")
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /MANIFEST:NO")
-endif()
-
-##############################################################################
 # notepad.exe
 
 add_executable(notepad WIN32
@@ -94,6 +85,11 @@ target_include_directories(notepad PRIVATE ./ reactos/)
 target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 shell32 msvcrt kernel32)
 if (MSVC)
     target_link_options(notepad PRIVATE "/entry:wWinMainCRTStartup")
+endif()
+
+if (MSVC)
+    # No default manifest
+    target_link_options(notepad PRIVATE /MANIFEST:NO)
 endif()
 
 ##############################################################################
