@@ -33,8 +33,7 @@ add_executable(notepad WIN32
     printing.c
     settings.c
     text.c
-    rsrc.rc
-    compat/WinMain.c)
+    rsrc.rc)
 
 target_compile_definitions(notepad PRIVATE
     UNICODE _UNICODE _CRT_SECURE_NO_WARNINGS
@@ -79,6 +78,10 @@ target_compile_definitions(notepad PRIVATE
     LANGUAGE_ZH_CN
     LANGUAGE_ZH_HK
     LANGUAGE_ZH_TW)
+
+if (NOT MSVC)
+    target_link_options(notepad BEFORE PRIVATE -municode)
+endif()
 
 target_include_directories(notepad PRIVATE ./ reactos/)
 target_link_libraries(notepad PRIVATE user32 gdi32 comctl32 comdlg32 advapi32 shell32 msvcrt kernel32)
