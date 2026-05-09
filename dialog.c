@@ -49,6 +49,7 @@ VOID ShowLastError(VOID)
     {
         LPTSTR lpMsgBuf = NULL;
         TCHAR szTitle[MAX_STRING_LEN];
+        TCHAR szFallback[42], *pszMessage = szFallback;
 
         LoadString(Globals.hInstance, STRING_ERROR, szTitle, _countof(szTitle));
 
@@ -60,7 +61,12 @@ VOID ShowLastError(VOID)
                       0,
                       NULL);
 
-        MessageBox(Globals.hMainWnd, lpMsgBuf, szTitle, MB_OK | MB_ICONERROR);
+        if (lpMsgBuf)
+            pszMessage = lpMsgBuf;
+        else
+            wsprintfW(szFallback, L"%d", error);
+
+        MessageBox(Globals.hMainWnd, pszMessage, szTitle, MB_OK | MB_ICONERROR);
         LocalFree(lpMsgBuf);
     }
 }
@@ -336,13 +342,14 @@ VOID DoOpenFile(LPCTSTR szFileName)
 {
     HANDLE hFile;
     TCHAR log[5];
-    HLOCAL hLocal;
+    HLOCAL hOldLocal, hNewLocal;
 
     /* Close any files and prompt to save changes */
     if (!DoCloseFile())
         return;
 
     WaitCursor(TRUE);
+    SetWindowText(Globals.hEdit, NULL);
 
     hFile = CreateFile(szFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
                        OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -353,13 +360,15 @@ VOID DoOpenFile(LPCTSTR szFileName)
     }
 
     /* To make loading file quicker, we use the internal handle of EDIT control */
-    hLocal = (HLOCAL)SendMessageW(Globals.hEdit, EM_GETHANDLE, 0, 0);
-    if (!ReadText(hFile, &hLocal, &Globals.encFile, &Globals.iEoln))
+    hOldLocal = (HLOCAL)SendMessageW(Globals.hEdit, EM_GETHANDLE, 0, 0);
+    hNewLocal = ReadText(hFile, &Globals.encFile, &Globals.iEoln);
+    if (!hNewLocal)
     {
         ShowLastError();
         goto done;
     }
-    SendMessageW(Globals.hEdit, EM_SETHANDLE, (WPARAM)hLocal, 0);
+    SendMessageW(Globals.hEdit, EM_SETHANDLE, (WPARAM)hNewLocal, 0);
+    LocalFree(hOldLocal);
     /* No need of EM_SETMODIFY and EM_EMPTYUNDOBUFFER here. EM_SETHANDLE does instead. */
 
     SetFocus(Globals.hEdit);
@@ -820,7 +829,7 @@ VOID DIALOG_SearchNext(BOOL bDown)
     else
         Globals.find.Flags &= ~FR_DOWN;
 
-    if (Globals.find.lpstrFindWhat != NULL)
+    if (Globals.find.lpstrFindWhat != NULL && *Globals.find.lpstrFindWhat)
         NOTEPAD_FindNext(&Globals.find, FALSE, TRUE);
     else
         DIALOG_Search();
@@ -928,7 +937,7 @@ VOID DIALOG_StatusBarUpdateCaretPos(VOID)
     DWORD dwStart, dwSize;
 
     SendMessage(Globals.hEdit, EM_GETSEL, (WPARAM)&dwStart, (LPARAM)&dwSize);
-    line = SendMessage(Globals.hEdit, EM_LINEFROMCHAR, (WPARAM)dwStart, 0);
+    line = (int)SendMessage(Globals.hEdit, EM_LINEFROMCHAR, (WPARAM)dwStart, 0);
     ich = (int)SendMessage(Globals.hEdit, EM_LINEINDEX, (WPARAM)line, 0);
 
     /* EM_LINEINDEX can return -1 on failure */
